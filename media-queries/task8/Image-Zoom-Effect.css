@@ -1,0 +1,20 @@
+.image-container {
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+.image-container:hover img {
+ 
+    transition: transform 0.5s ease;
+    transform: scale(1.2);
+
+
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}

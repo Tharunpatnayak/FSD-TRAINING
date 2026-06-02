@@ -1,0 +1,28 @@
+.ball{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    border-radius: 50%;
+    position: relative;
+    animation: move 1.5s infinite;
+    animation-iteration-count: infinite;
+}
+
+@keyframes move {
+    0% {
+        left: 0;
+    }
+    25% {
+        left: calc(100% - 100px);
+        top: 0;
+    }
+    50% {
+        left: calc(100% - 100px);
+    }
+    75% {
+        left: 0;
+    }
+    100% {
+        left: 0;
+    }
+}
