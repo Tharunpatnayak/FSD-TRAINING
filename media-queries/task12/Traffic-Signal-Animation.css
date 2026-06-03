@@ -1,0 +1,71 @@
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    background:#f0f0f0;
+}
+
+.signal{
+    background:#222;
+    padding:15px;
+    border-radius:10px;
+}
+
+.light{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:#555;
+    margin:10px 0;
+}
+
+
+.red{
+    animation:redLight 2s infinite;
+}
+
+.yellow{
+    animation:yellowLight 2s infinite;
+}
+
+.green{
+    animation:greenLight 2s infinite;
+}
+
+@keyframes redLight{
+    0%, 33%{
+        background:red;
+        box-shadow:0 0 20px red;
+    }
+    34%, 100%{
+        background:#555;
+        box-shadow:none;
+    }
+}
+
+@keyframes yellowLight{
+    0%, 33%{
+        background:#555;
+        box-shadow:none;
+    }
+    34%, 66%{
+        background:yellow;
+        box-shadow:0 0 20px yellow;
+    }
+    67%, 100%{
+        background:#555;
+        box-shadow:none;
+    }
+}
+
+@keyframes greenLight{
+    0%, 66%{
+        background:#555;
+        box-shadow:none;
+    }
+    67%, 100%{
+        background:limegreen;
+        box-shadow:0 0 20px limegreen;
+    }
+}
