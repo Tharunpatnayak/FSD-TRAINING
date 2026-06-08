@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+
+        function validateForm() {
+
+            var username =
+            document.getElementsByName("username")[0].value;
+
+            var email =
+            document.getElementsByName("email")[0].value;
+
+            var password =
+            document.getElementsByName("password")[0].value;
+
+            var confirmPassword =
+            document.getElementsByName("confirmpassword")[0].value;
+
+            if(password !== confirmPassword){
+
+                alert("Passwords do not match.");
+
+                return false;
+            }
+
+            var users =
+            JSON.parse(localStorage.getItem("users")) || [];
+
+            var existingUser =
+            users.find(user => user.username === username);
+
+            if(existingUser){
+
+                alert("Username already exists.");
+
+                return false;
+            }
+
+            var user = {
+
+                username: username,
+                email: email,
+                password: password
+            };
+
+            users.push(user);
+
+            localStorage.setItem(
+                "users",
+                JSON.stringify(users)
+            );
+
+            alert("Registration Successful!");
+
+            window.location.href =
+            "login.html";
+
+            return false;
+        }
+
+    </script>
+
+</head>
+<body>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+</nav>
+
+<h1>Register</h1>
+
+<form onsubmit="return validateForm()">
+
+    <label>Username:</label>
+    <input type="text" name="username" required>
+
+    <br><br>
+
+    <label>Email:</label>
+    <input type="email" name="email" required>
+
+    <br><br>
+
+    <label>Password:</label>
+    <input type="password" name="password" required>
+
+    <br><br>
+
+    <label>Confirm Password:</label>
+    <input type="password" name="confirmpassword" required>
+
+    <br><br>
+
+    <input class="btn" type="submit" value="Register">
+
+</form>
+
+<h2>Already Registered?</h2>
+
+<a href="login.html">
+    Go to Login
+</a>
+
+</body>
+</html>
