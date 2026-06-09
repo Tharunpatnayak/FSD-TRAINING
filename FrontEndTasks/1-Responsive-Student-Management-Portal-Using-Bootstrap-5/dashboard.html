@@ -12,22 +12,38 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
+
         <a class="navbar-brand fw-bold" href="index.html">
             🎓 CVR College
         </a>
 
         <div class="ms-auto">
-            <a href="index.html" class="btn btn-light btn-sm">Home</a>
-            <a href="registration.html" class="btn btn-light btn-sm">Register</a>
+            <a href="index.html" class="btn btn-light btn-sm">
+                Home
+            </a>
+
+            <a href="registration.html" class="btn btn-light btn-sm">
+                Register
+            </a>
         </div>
+
     </div>
 </nav>
 
 <section class="bg-light py-4">
+
     <div class="container text-center">
-        <h1 class="display-5 fw-bold">Student Dashboard</h1>
-        <p class="lead">Monitor student records and statistics</p>
+
+        <h1 class="display-5 fw-bold">
+            Student Dashboard
+        </h1>
+
+        <p class="lead">
+            Monitor student records and statistics
+        </p>
+
     </div>
+
 </section>
 
 <div class="container my-5">
@@ -35,39 +51,67 @@
     <div class="row g-4">
 
         <div class="col-lg-3 col-md-6">
+
             <div class="card text-center bg-primary text-white">
+
                 <div class="card-body">
-                    <h2>1500</h2>
+
+                    <h2 id="totalStudents">0</h2>
+
                     <h5>Total Students</h5>
+
                 </div>
+
             </div>
+
         </div>
 
         <div class="col-lg-3 col-md-6">
+
             <div class="card text-center bg-success text-white">
+
                 <div class="card-body">
-                    <h2>1350</h2>
+
+                    <h2 id="presentStudents">0</h2>
+
                     <h5>Present Students</h5>
+
                 </div>
+
             </div>
+
         </div>
 
         <div class="col-lg-3 col-md-6">
+
             <div class="card text-center bg-warning text-dark">
+
                 <div class="card-body">
-                    <h2>150</h2>
+
+                    <h2 id="absentStudents">0</h2>
+
                     <h5>Absent Students</h5>
+
                 </div>
+
             </div>
+
         </div>
 
         <div class="col-lg-3 col-md-6">
+
             <div class="card text-center bg-danger text-white">
+
                 <div class="card-body">
-                    <h2>420</h2>
+
+                    <h2 id="placements">0</h2>
+
                     <h5>Placements</h5>
+
                 </div>
+
             </div>
+
         </div>
 
     </div>
@@ -77,17 +121,21 @@
 <div class="container mb-4">
 
     <div class="card">
+
         <div class="card-body">
 
             <label class="form-label fw-bold">
                 Search Student
             </label>
 
-            <input type="text"
-                   class="form-control"
-                   placeholder="Search by Roll Number or Name">
+            <input
+                type="text"
+                id="search"
+                class="form-control"
+                placeholder="Search by Roll Number or Name">
 
         </div>
+
     </div>
 
 </div>
@@ -112,73 +160,15 @@
                             <th>Roll No</th>
                             <th>Name</th>
                             <th>Branch</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
                             <th>Attendance</th>
-                            <th>Status</th>
+                            <th>Placement</th>
                         </tr>
 
                     </thead>
 
-                    <tbody>
-
-                        <tr>
-                            <td>101</td>
-                            <td>Rahul Kumar</td>
-                            <td>CSE</td>
-                            <td>92%</td>
-                            <td>
-                                <span class="badge bg-success">
-                                    Present
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>102</td>
-                            <td>Sneha Reddy</td>
-                            <td>ECE</td>
-                            <td>88%</td>
-                            <td>
-                                <span class="badge bg-success">
-                                    Present
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>103</td>
-                            <td>Arjun Kumar</td>
-                            <td>IT</td>
-                            <td>65%</td>
-                            <td>
-                                <span class="badge bg-warning text-dark">
-                                    Leave
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>104</td>
-                            <td>Priya Sharma</td>
-                            <td>CSE</td>
-                            <td>45%</td>
-                            <td>
-                                <span class="badge bg-danger">
-                                    Absent
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>105</td>
-                            <td>Vikram Singh</td>
-                            <td>EEE</td>
-                            <td>95%</td>
-                            <td>
-                                <span class="badge bg-success">
-                                    Present
-                                </span>
-                            </td>
-                        </tr>
+                    <tbody id="studentTable">
 
                     </tbody>
 
@@ -207,6 +197,252 @@
     </p>
 
 </footer>
+
+<script>
+
+let students =
+JSON.parse(localStorage.getItem("students")) || [];
+
+students = students.filter(student =>
+    student.fullName &&
+    student.rollNumber
+);
+
+function updateCounts(){
+
+    let total =
+    students.length;
+
+    let present =
+    students.filter(student =>
+        student.attendance === "Present"
+    ).length;
+
+    let absent =
+    students.filter(student =>
+        student.attendance === "Absent"
+    ).length;
+
+    let placed =
+    students.filter(student =>
+        student.placement === "Placed"
+    ).length;
+
+    document.getElementById("totalStudents").innerText =
+    total;
+
+    document.getElementById("presentStudents").innerText =
+    present;
+
+    document.getElementById("absentStudents").innerText =
+    absent;
+
+    document.getElementById("placements").innerText =
+    placed;
+}
+
+function saveData(){
+
+    localStorage.setItem(
+        "students",
+        JSON.stringify(students)
+    );
+
+    let total =
+    students.length;
+
+    let presentStudentsData =
+    students.filter(student =>
+        student.attendance === "Present"
+    );
+
+    let absentStudentsData =
+    students.filter(student =>
+        student.attendance === "Absent"
+    );
+
+    let placedStudentsData =
+    students.filter(student =>
+        student.placement === "Placed"
+    );
+
+localStorage.setItem(
+    "dashboardStats",
+    JSON.stringify({
+        totalStudents: total,
+        presentStudents: presentStudentsData.length,
+        absentStudents: absentStudentsData.length,
+        placements: placedStudentsData.length
+    })
+);
+
+    localStorage.setItem(
+        "attendanceData",
+        JSON.stringify(
+            students.map(student => ({
+                rollNumber: student.rollNumber,
+                fullName: student.fullName,
+                branch: student.branch,
+                email: student.email,
+                mobile: student.mobile,
+                attendance: student.attendance
+            }))
+        )
+    );
+
+    localStorage.setItem(
+        "placementData",
+        JSON.stringify(
+            students.map(student => ({
+                rollNumber: student.rollNumber,
+                fullName: student.fullName,
+                branch: student.branch,
+                email: student.email,
+                mobile: student.mobile,
+                placement: student.placement
+            }))
+        )
+    );
+
+    updateCounts();
+}
+
+function displayStudents(data){
+
+    let table =
+    document.getElementById("studentTable");
+
+    table.innerHTML = "";
+
+    if(data.length === 0){
+
+        table.innerHTML = `
+        <tr>
+            <td colspan="7" class="text-center">
+                No Students Found
+            </td>
+        </tr>
+        `;
+
+        return;
+    }
+
+    data.forEach((student,index) => {
+
+        if(!student.attendance){
+            student.attendance = "Present";
+        }
+
+        if(!student.placement){
+            student.placement = "Not Placed";
+        }
+
+        table.innerHTML += `
+
+        <tr>
+
+            <td>${student.rollNumber}</td>
+
+            <td>${student.fullName}</td>
+
+            <td>${student.branch}</td>
+
+            <td>${student.email}</td>
+
+            <td>${student.mobile}</td>
+
+            <td>
+
+                <select
+                    class="form-select"
+                    onchange="changeAttendance(${index},this.value)">
+
+                    <option value="Present"
+                    ${student.attendance === "Present" ? "selected" : ""}>
+                    Present
+                    </option>
+
+                    <option value="Absent"
+                    ${student.attendance === "Absent" ? "selected" : ""}>
+                    Absent
+                    </option>
+
+                </select>
+
+            </td>
+
+            <td>
+
+                <select
+                    class="form-select"
+                    onchange="changePlacement(${index},this.value)">
+
+                    <option value="Placed"
+                    ${student.placement === "Placed" ? "selected" : ""}>
+                    Placed
+                    </option>
+
+                    <option value="Not Placed"
+                    ${student.placement === "Not Placed" ? "selected" : ""}>
+                    Not Placed
+                    </option>
+
+                </select>
+
+            </td>
+
+        </tr>
+
+        `;
+    });
+
+    saveData();
+}
+
+function changeAttendance(index,value){
+
+    students[index].attendance =
+    value;
+
+    saveData();
+}
+
+function changePlacement(index,value){
+
+    students[index].placement =
+    value;
+
+    saveData();
+}
+
+displayStudents(students);
+
+document.getElementById("search")
+.addEventListener("keyup", function(){
+
+    let value =
+    this.value.toLowerCase();
+
+    let filtered =
+    students.filter(student =>
+
+        student.fullName
+        .toLowerCase()
+        .includes(value)
+
+        ||
+
+        student.rollNumber
+        .toLowerCase()
+        .includes(value)
+
+    );
+
+    displayStudents(filtered);
+
+});
+
+</script>
 
 </body>
 </html>
