@@ -401,20 +401,23 @@
             <div class="modal-body">
 
                 <input type="text"
-                       class="form-control mb-3"
-                       placeholder="Username">
+       id="loginUsername"
+       class="form-control mb-3"
+       placeholder="Username">
 
-                <input type="password"
-                       class="form-control"
-                       placeholder="Password">
+<input type="password"
+       id="loginPassword"
+       class="form-control"
+       placeholder="Password">
 
             </div>
 
             <div class="modal-footer">
 
-                <button class="btn btn-primary">
-                    Login
-                </button>
+                <button class="btn btn-primary"
+        onclick="loginUser()">
+    Login
+</button>
 
             </div>
 
@@ -424,7 +427,52 @@
 
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+function loginUser(){
+
+    let username =
+    document.getElementById("loginUsername").value.trim();
+
+    let password =
+    document.getElementById("loginPassword").value.trim();
+
+    let users =
+    JSON.parse(
+        localStorage.getItem("portalUsers")
+    ) || [];
+
+    let validUser =
+    users.find(user =>
+        user.username === username &&
+        user.password === password
+    );
+
+    if(validUser){
+
+        localStorage.setItem(
+            "portalLoggedInUser",
+            JSON.stringify(validUser)
+        );
+
+        alert("Login Successful");
+
+        window.location.href =
+        "dashboard.html";
+
+    }else{
+
+        alert(
+        "Invalid Username or Password"
+        );
+
+    }
+
+}
+
+</script>
 
 </body>
 </html>

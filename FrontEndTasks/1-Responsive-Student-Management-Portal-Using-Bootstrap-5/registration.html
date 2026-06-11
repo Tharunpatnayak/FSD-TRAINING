@@ -14,19 +14,63 @@
 
             event.preventDefault();
 
-            let fullName = document.getElementById("fullName").value.trim();
-            let rollNumber = document.getElementById("rollNumber").value.trim();
-            let email = document.getElementById("email").value.trim();
-            let mobile = document.getElementById("mobile").value.trim();
-            let gender = document.getElementById("gender").value;
-            let branch = document.getElementById("branch").value;
-            let dob = document.getElementById("dob").value;
-            let address = document.getElementById("address").value.trim();
+            let username =
+            document.getElementById("username").value.trim();
 
-            let nameRegex = /^[A-Za-z ]{3,30}$/;
-            let rollRegex = /^[A-Za-z0-9]{5,15}$/;
-            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            let mobileRegex = /^[6-9][0-9]{9}$/;
+            let password =
+            document.getElementById("password").value.trim();
+
+            let fullName =
+            document.getElementById("fullName").value.trim();
+
+            let rollNumber =
+            document.getElementById("rollNumber").value.trim();
+
+            let email =
+            document.getElementById("email").value.trim();
+
+            let mobile =
+            document.getElementById("mobile").value.trim();
+
+            let gender =
+            document.getElementById("gender").value;
+
+            let branch =
+            document.getElementById("branch").value;
+
+            let dob =
+            document.getElementById("dob").value;
+
+            let address =
+            document.getElementById("address").value.trim();
+
+            let usernameRegex =
+            /^[A-Za-z0-9_]{4,15}$/;
+
+            let passwordRegex =
+            /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,20}$/;
+
+            let nameRegex =
+            /^[A-Za-z ]{3,30}$/;
+
+            let rollRegex =
+            /^[A-Za-z0-9]{5,15}$/;
+
+            let emailRegex =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            let mobileRegex =
+            /^[6-9][0-9]{9}$/;
+
+            if(!usernameRegex.test(username)){
+                alert("Username must be 4-15 characters");
+                return;
+            }
+
+            if(!passwordRegex.test(password)){
+                alert("Password must contain uppercase, lowercase and number");
+                return;
+            }
 
             if(!nameRegex.test(fullName)){
                 alert("Enter a valid name");
@@ -44,56 +88,80 @@
             }
 
             if(!mobileRegex.test(mobile)){
-                alert("Enter a valid 10 digit mobile number");
+                alert("Enter a valid mobile number");
                 return;
             }
 
-            let students =
-            JSON.parse(localStorage.getItem("students")) || [];
+          let studentPortalData =
+JSON.parse(
+    localStorage.getItem("studentPortalData")
+) || [];
 
-            let rollExists =
-            students.some(student =>
-                student.rollNumber === rollNumber
-            );
-
-            if(rollExists){
+            if(
+                students.some(
+                    student =>
+                    student.rollNumber === rollNumber
+                )
+            ){
                 alert("Roll Number already exists");
                 return;
             }
 
-            let emailExists =
-            students.some(student =>
-                student.email === email
-            );
-
-            if(emailExists){
+            if(
+                students.some(
+                    student =>
+                    student.email === email
+                )
+            ){
                 alert("Email already exists");
                 return;
             }
 
-            let student = {
+            if(
+                portalUsers.some(
+                    user =>
+                    user.username === username
+                )
+            ){
+                alert("Username already exists");
+                return;
+            }
+studentPortalData.push({
 
-                fullName,
-                rollNumber,
-                email,
-                mobile,
-                gender,
-                branch,
-                dob,
-                address
-            };
+    username,
+    password,
+    fullName,   
+    rollNumber,
+    email,
+    mobile,
+    gender,
+    branch,
+    dob,
+    address
 
-            students.push(student);
+});
 
-            localStorage.setItem(
-                "students",
-                JSON.stringify(students)
+localStorage.setItem(
+    "studentPortalData",
+    JSON.stringify(studentPortalData)
+);
+
+            alert(
+                "Registration Successful"
             );
 
-            alert("Student Registered Successfully");
+           localStorage.setItem(
+    "portalLoggedInUser",
+    JSON.stringify({
+        username,
+        fullName,
+        email,
+        rollNumber
+    })
+);
 
-            window.location.href =
-            "dashboard.html";
+window.location.href =
+"dashboard.html";
         }
 
     </script>
@@ -102,6 +170,7 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
     <div class="container">
 
         <a class="navbar-brand fw-bold" href="index.html">
@@ -142,6 +211,7 @@
         </div>
 
     </div>
+
 </nav>
 
 <section class="bg-light py-4">
@@ -170,7 +240,34 @@
 
         <div class="card-body">
 
-            <form class="row g-3" onsubmit="registerStudent(event)">
+            <form class="row g-3"
+                  onsubmit="registerStudent(event)">
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Username
+                    </label>
+
+                    <input type="text"
+                           id="username"
+                           class="form-control"
+                           required>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Password
+                    </label>
+
+                    <input type="password"
+                           id="password"
+                           class="form-control"
+                           required>
+
+                </div>
 
                 <div class="col-md-6">
 
@@ -246,17 +343,9 @@
                             Select Gender
                         </option>
 
-                        <option>
-                            Male
-                        </option>
-
-                        <option>
-                            Female
-                        </option>
-
-                        <option>
-                            Other
-                        </option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
 
                     </select>
 

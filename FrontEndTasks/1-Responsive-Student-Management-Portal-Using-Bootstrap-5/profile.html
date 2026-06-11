@@ -7,10 +7,27 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <script>
+
+let user =
+JSON.parse(
+    localStorage.getItem("portalLoggedInUser")
+);
+
+if(!user){
+
+    alert("Please Login First");
+
+    window.location.href =
+    "index.html";
+}
+
+</script>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
     <div class="container">
 
         <a class="navbar-brand fw-bold" href="index.html">
@@ -18,11 +35,24 @@
         </a>
 
         <div class="ms-auto">
-            <a href="index.html" class="btn btn-light btn-sm me-2">Home</a>
-            <a href="dashboard.html" class="btn btn-light btn-sm">Dashboard</a>
+
+            <a href="index.html" class="btn btn-light btn-sm me-2">
+                Home
+            </a>
+
+            <a href="dashboard.html" class="btn btn-light btn-sm">
+                Dashboard
+            </a>
+            <button
+        class="btn btn-danger btn-sm"
+        onclick="logoutUser()">
+        Logout
+    </button>
+
         </div>
 
     </div>
+
 </nav>
 
 <section class="bg-light py-4">
@@ -49,14 +79,15 @@
 
             <div class="card shadow">
 
-                <img src="https://picsum.photos/400/300"
-                     class="card-img-top"
-                     alt="Student Image">
+                <img id="studentImage"
+                src=""
+                        class="card-img-top"
+                         alt="Student Image">
 
                 <div class="card-body">
 
-                    <h3 class="card-title">
-                        Tharun
+                    <h3 class="card-title" id="studentName">
+                        Student Name
                     </h3>
 
                     <p class="card-text">
@@ -67,25 +98,30 @@
 
                     <p>
                         <strong>Roll Number:</strong>
-                        23B81A0501
+                        <span id="rollNumber"></span>
                     </p>
 
                     <p>
                         <strong>Branch:</strong>
-                        Computer Science Engineering
+                        <span id="branch"></span>
                     </p>
 
                     <p>
                         <strong>Email:</strong>
-                        student@cvr.ac.in
+                        <span id="email"></span>
                     </p>
 
                     <p>
                         <strong>Mobile:</strong>
-                        9876543210
+                        <span id="mobile"></span>
                     </p>
 
-                    <button class="btn btn-primary">
+                    <p>
+                        <strong>Gender:</strong>
+                        <span id="gender"></span>
+                    </p>
+
+                    <button class="btn btn-primary" onclick="editProfile()">
                         Edit Profile
                     </button>
 
@@ -109,20 +145,25 @@
 
                 <div class="card-body text-center">
 
-                    <img src="https://picsum.photos/150"
-                         class="rounded-circle mb-3"
-                         alt="Student Photo">
+                    <img id="idPhoto"
+     src=""
+     class="rounded-circle mb-3"
+     width="150"
+     height="150"
+     alt="Student Photo">
 
-                    <h4>
-                        Tharun
+                    <h4 id="idName">
+                        Student Name
                     </h4>
 
                     <p>
-                        Roll No: 23B81A0501
+                        Roll No:
+                        <span id="idRoll"></span>
                     </p>
 
                     <p>
-                        Branch: CSE
+                        Branch:
+                        <span id="idBranch"></span>
                     </p>
 
                     <p>
@@ -134,15 +175,13 @@
                     </span>
 
                     <hr>
-
-                    <img src="https://picsum.photos/100"
-                         alt="QR Code">
+                    <div id="qrContainer"></div>
 
                     <p class="mt-2">
                         Student Verification QR
                     </p>
 
-                    <button class="btn btn-success">
+                    <button class="btn btn-success" onclick="window.print()">
                         Download ID Card
                     </button>
 
@@ -205,9 +244,9 @@
 
 <div class="container mb-5">
 
-    <div class="alert alert-success">
+    <div class="alert alert-success" id="profileMessage">
 
-        Student Profile Updated Successfully.
+        Student Profile Loaded Successfully.
 
     </div>
 
@@ -220,6 +259,115 @@
     </p>
 
 </footer>
+
+<script>
+document.getElementById("qrContainer").innerHTML = `
+<img
+src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${student.rollNumber}"
+alt="Student QR Code"
+class="img-fluid">
+`;
+let loggedInUser =
+JSON.parse(localStorage.getItem("loggedInUser"));
+
+let students =
+JSON.parse(localStorage.getItem("students")) || [];
+
+if(loggedInUser){
+
+    let student =
+    students.find(s =>
+        s.email === loggedInUser.email
+    );
+
+    if(student){
+        let images = [
+
+"https://randomuser.me/api/portraits/men/1.jpg",
+"https://randomuser.me/api/portraits/men/2.jpg",
+"https://randomuser.me/api/portraits/men/3.jpg",
+"https://randomuser.me/api/portraits/men/4.jpg",
+"https://randomuser.me/api/portraits/women/1.jpg",
+"https://randomuser.me/api/portraits/women/2.jpg",
+"https://randomuser.me/api/portraits/women/3.jpg",
+"https://randomuser.me/api/portraits/women/4.jpg"
+
+];
+
+let imageIndex =
+student.rollNumber.length % images.length;
+
+document.getElementById("studentImage").src =
+images[imageIndex];
+
+document.getElementById("idPhoto").src =
+images[imageIndex];
+        document.getElementById("studentName").innerText =
+        student.fullName;
+
+        document.getElementById("rollNumber").innerText =
+        student.rollNumber;
+
+        document.getElementById("branch").innerText =
+        student.branch;
+
+        document.getElementById("email").innerText =
+        student.email;
+
+        document.getElementById("mobile").innerText =
+        student.mobile;
+
+        document.getElementById("gender").innerText =
+        student.gender;
+
+        document.getElementById("idName").innerText =
+        student.fullName;
+
+        document.getElementById("idRoll").innerText =
+        student.rollNumber;
+
+        document.getElementById("idBranch").innerText =
+        student.branch;
+
+    }else{
+
+        document.getElementById("profileMessage").className =
+        "alert alert-danger";
+
+        document.getElementById("profileMessage").innerText =
+        "Student Profile Not Found";
+    }
+
+}else{
+
+    document.getElementById("profileMessage").className =
+    "alert alert-danger";
+
+    document.getElementById("profileMessage").innerText =
+    "Please Login First";
+
+}
+
+function editProfile(){
+
+    alert("Profile Edit Feature Coming Soon");
+
+}
+function logoutUser(){
+
+    localStorage.removeItem(
+        "portalLoggedInUser"
+    );
+
+    alert(
+        "Logged Out Successfully"
+    );
+
+    window.location.href =
+    "index.html";
+}
+
+</script>
 
 </body>
 </html>
