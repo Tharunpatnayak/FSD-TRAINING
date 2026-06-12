@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+        function addStudent() {
+
+            var name = document.getElementsByName("name")[0].value;
+            var age = document.getElementsByName("age")[0].value;
+            var rollno = document.getElementsByName("rollno")[0].value;
+            var cgpa = document.getElementsByName("cgpa")[0].value;
+
+            var student = {
+                name: name,
+                age: age,
+                rollno: rollno,
+                cgpa: cgpa
+            };
+
+            var students = JSON.parse(localStorage.getItem("students")) || [];
+
+            students.push(student);
+
+            localStorage.setItem("students", JSON.stringify(students));
+
+            alert("Student Added Successfully");
+
+            document.querySelector("form").reset();
+
+            return false;
+        }
+    </script>
+</head>
+<body>
+
+<nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="addstudent.html">Add Student</a>
+    <a href="viewstudent.html">View Student</a>
+    <a href="editstudent.html">Edit Student</a>
+    <a href="logout.html">Logout</a>
+</nav>
+
+<form onsubmit="return addStudent()">
+
+    Name:
+    <input type="text" name="name" required>
+    <br><br>
+
+    Age:
+    <input type="number" name="age" required>
+    <br><br>
+
+    Roll Number:
+    <input type="number" name="rollno" required>
+    <br><br>
+
+    CGPA:
+    <input type="number" step="0.01" name="cgpa" required>
+    <br><br>
+
+    <input class="btn" type="submit" value="Submit">
+
+</form>
+
+</body>
+</html>
