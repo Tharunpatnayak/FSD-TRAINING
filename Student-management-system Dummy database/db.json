@@ -85,6 +85,13 @@
       "rollno": 5,
       "cgpa": 9,
       "id": "BkKj_VcJR9s"
+    },
+    {
+      "name": "Banoth Nareshh",
+      "age": 12,
+      "rollno": 14,
+      "cgpa": 6,
+      "id": "Nv-jDp0k6jQ"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
