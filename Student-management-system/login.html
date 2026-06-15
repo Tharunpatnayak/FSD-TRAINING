@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+
+        function loginUser(){
+
+            var username =
+            document.getElementsByName("username")[0].value.trim();
+
+            var password =
+            document.getElementsByName("password")[0].value;
+
+            var usernameRegex =
+            /^[A-Za-z0-9]{4,15}$/;
+
+            var passwordRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+            if(!usernameRegex.test(username)){
+
+                alert("Invalid Username Format");
+
+                return false;
+            }
+
+            if(!passwordRegex.test(password)){
+
+                alert("Invalid Password Format");
+
+                return false;
+            }
+
+            var users =
+            JSON.parse(localStorage.getItem("users")) || [];
+
+            var validUser =
+            users.find(user =>
+                user.username === username &&
+                user.password === password
+            );
+
+            if(validUser){
+
+                localStorage.setItem(
+                    "loggedInUser",
+                    JSON.stringify(validUser)
+                );
+
+                alert("Login Successful!");
+
+                window.location.href =
+                "dashboard.html";
+
+            }else{
+
+                alert("Invalid Username or Password");
+            }
+
+            return false;
+        }
+
+    </script>
+
+</head>
+<body>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="register.html">Register</a>
+</nav>
+
+<form onsubmit="return loginUser()">
+
+    <h1>Login</h1>
+
+    <label>Username:</label>
+    <input type="text" name="username" required>
+
+    <br><br>
+
+    <label>Password:</label>
+    <input type="password" name="password" required>
+
+    <br><br>
+
+    <input class="btn" type="submit" value="Login">
+
+</form>
+
+</body>
+</html>

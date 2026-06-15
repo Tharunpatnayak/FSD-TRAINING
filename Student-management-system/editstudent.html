@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="addstudent.html">Add Student</a>
+    <a href="viewstudent.html">View Student</a>
+    <a href="editstudent.html">Edit Student</a>
+    <a href="logout.html">Logout</a>
+</nav>
+
+<h1>Edit Student Details</h1>
+
+<form onsubmit="return updateStudent()">
+
+    <label>Name:</label>
+    <input type="text" id="name" required>
+    <br><br>
+
+    <label>Age:</label>
+    <input type="number" id="age" required>
+    <br><br>
+
+    <label>Roll Number:</label>
+    <input type="text" id="rollno" required>
+    <br><br>
+
+    <label>CGPA:</label>
+    <input type="number" step="0.01" id="cgpa" required>
+    <br><br>
+
+    <input class="btn" type="submit" value="Update">
+
+</form>
+
+<script>
+
+let students =
+JSON.parse(localStorage.getItem("students")) || [];
+
+let editIndex =
+localStorage.getItem("editIndex");
+
+if(editIndex !== null){
+
+    document.getElementById("name").value =
+    students[editIndex].name;
+
+    document.getElementById("age").value =
+    students[editIndex].age;
+
+    document.getElementById("rollno").value =
+    students[editIndex].rollno;
+
+    document.getElementById("cgpa").value =
+    students[editIndex].cgpa;
+}
+
+function updateStudent(){
+
+    students[editIndex] = {
+
+        name:
+        document.getElementById("name").value,
+
+        age:
+        document.getElementById("age").value,
+
+        rollno:
+        document.getElementById("rollno").value,
+
+        cgpa:
+        document.getElementById("cgpa").value
+    };
+
+    localStorage.setItem(
+        "students",
+        JSON.stringify(students)
+    );
+
+    alert("Student Updated Successfully");
+
+    window.location.href =
+    "viewstudent.html";
+
+    return false;
+}
+
+</script>
+
+</body>
+</html>
