@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+
+        let loggedInUser =
+        JSON.parse(
+            sessionStorage.getItem("loggedInUser")
+        );
+
+        if(!loggedInUser){
+
+            alert(
+            "Please Login First"
+            );
+
+            window.location.href =
+            "login.html";
+        }
+
+        async function addStudent(event){
+
+            event.preventDefault();
+
+            const name =
+            document.getElementsByName("name")[0]
+            .value.trim();
+
+            const age =
+            document.getElementsByName("age")[0]
+            .value.trim();
+
+            const rollno =
+            document.getElementsByName("rollno")[0]
+            .value.trim();
+
+            const cgpa =
+            document.getElementsByName("cgpa")[0]
+            .value.trim();
+
+            if(name === "" ||
+               age === "" ||
+               rollno === "" ||
+               cgpa === ""){
+
+                alert(
+                "All fields are required"
+                );
+
+                return;
+            }
+
+            try{
+
+                let response =
+                await fetch(
+                    "http://localhost:3000/students"
+                );
+
+                let students =
+                await response.json();
+
+                let existingStudent =
+                students.find(student =>
+                student.rollno === Number(rollno)
+                );
+
+                if(existingStudent){
+
+                    alert(
+                    "Roll Number already exists"
+                    );
+
+                    return;
+                }
+
+                let student = {
+                name: name,
+                age: Number(age),
+                rollno: Number(rollno),
+                cgpa: Number(cgpa)
+                };
+
+                let saveResponse =
+                await fetch(
+                    "http://localhost:3000/students",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                            "application/json"
+                        },
+
+                        body:
+                        JSON.stringify(student)
+                    }
+                );
+
+                if(!saveResponse.ok){
+
+                    throw new Error(
+                    "Failed to save student"
+                    );
+                }
+
+                alert(
+                "Student Added Successfully"
+                );
+
+                document
+                .querySelector("form")
+                .reset();
+
+            }
+            catch(error){
+
+                console.error(error);
+
+                alert(
+                "Unable to connect to JSON Server."
+                );
+            }
+
+        }
+
+    </script>
+
+</head>
+<body>
+
+<nav>
+
+    <a href="dashboard.html">
+        Dashboard
+    </a>
+
+    <a href="addstudent.html">
+        Add Student
+    </a>
+
+    <a href="viewstudent.html">
+        View Student
+    </a>
+
+    <a href="editstudent.html">
+        Edit Student
+    </a>
+
+    <a href="logout.html">
+        Logout
+    </a>
+
+</nav>
+
+<h1>Add Student</h1>
+
+<form onsubmit="addStudent(event)">
+
+    <label>
+        Name:
+    </label>
+
+    <input
+        type="text"
+        name="name"
+        required>
+
+    <br><br>
+
+    <label>
+        Age:
+    </label>
+
+    <input
+        type="number"
+        name="age"
+        required>
+
+    <br><br>
+
+    <label>
+        Roll Number:
+    </label>
+
+    <input
+        type="number"
+        name="rollno"
+        required>
+
+    <br><br>
+
+    <label>
+        CGPA:
+    </label>
+
+    <input
+        type="number"
+        step="0.01"
+        name="cgpa"
+        required>
+
+    <br><br>
+
+    <input
+        class="btn"
+        type="submit"
+        value="Submit">
+
+</form>
+
+</body>
+</html>

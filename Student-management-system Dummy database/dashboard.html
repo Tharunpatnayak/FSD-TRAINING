@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard.</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+
+        let loggedInUser =
+        JSON.parse(
+            sessionStorage.getItem("loggedInUser")
+        );
+
+        if(!loggedInUser){
+
+            alert(
+            "Please Login First"
+            );
+
+            window.location.href =
+            "login.html";
+        }
+
+    </script>
+
+</head>
+<body>
+
+<h1>Student Dashboard</h1>
+
+<nav>
+
+    <a href="addstudent.html">
+        Add Student
+    </a>
+
+    <a href="viewstudent.html">
+        View Student
+    </a>
+
+    <a href="editstudent.html">
+        Edit Student
+    </a>
+
+    <a href="logout.html">
+        Logout
+    </a>
+
+</nav>
+
+<br>
+
+<h3>
+    Welcome,
+    <span id="username"></span>
+</h3>
+
+<table border="1" cellpadding="10">
+
+    <thead>
+
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Roll Number</th>
+            <th>CGPA</th>
+        </tr>
+
+    </thead>
+
+    <tbody id="studentTable">
+
+    </tbody>
+
+</table>
+
+<script>
+
+document.getElementById("username")
+.innerText =
+loggedInUser.username;
+
+async function loadStudents(){
+
+    try{
+
+        let response =
+        await fetch(
+            "http://localhost:3000/students"
+        );
+
+        let students =
+        await response.json();
+
+        let table =
+        document.getElementById(
+            "studentTable"
+        );
+
+        table.innerHTML = "";
+
+        if(students.length === 0){
+
+            table.innerHTML = `
+
+            <tr>
+
+                <td colspan="4">
+
+                    No Students Found
+
+                </td>
+
+            </tr>
+
+            `;
+
+            return;
+        }
+
+        students.forEach(student => {
+
+            table.innerHTML += `
+
+            <tr>
+
+                <td>
+                    ${student.name}
+                </td>
+
+                <td>
+                    ${student.age}
+                </td>
+
+                <td>
+                    ${student.rollno}
+                </td>
+
+                <td>
+                    ${student.cgpa}
+                </td>
+
+            </tr>
+
+            `;
+
+        });
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+        "Unable to fetch student data from JSON Server."
+        );
+    }
+
+}
+
+loadStudents();
+
+</script>
+
+</body>
+</html>

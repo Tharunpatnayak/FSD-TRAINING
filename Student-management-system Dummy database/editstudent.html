@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+
+        let loggedInUser =
+        JSON.parse(
+            sessionStorage.getItem("loggedInUser")
+        );
+
+        if(!loggedInUser){
+
+            alert(
+            "Please Login First"
+            );
+
+            window.location.href =
+            "login.html";
+        }
+
+    </script>
+
+</head>
+<body>
+
+<nav>
+
+    <a href="dashboard.html">
+        Dashboard
+    </a>
+
+    <a href="addstudent.html">
+        Add Student
+    </a>
+
+    <a href="viewstudent.html">
+        View Student
+    </a>
+
+    <a href="editstudent.html">
+        Edit Student
+    </a>
+
+    <a href="logout.html">
+        Logout
+    </a>
+
+</nav>
+
+<h1>Edit Student Details</h1>
+
+<form onsubmit="updateStudent(event)">
+
+    <label>Name:</label>
+    <input
+        type="text"
+        id="name"
+        required>
+
+    <br><br>
+
+    <label>Age:</label>
+    <input
+        type="number"
+        id="age"
+        min="16"
+        max="35"
+        required>
+
+    <br><br>
+
+    <label>Roll Number:</label>
+    <input
+        type="number"
+        id="rollno"
+        required>
+
+    <br><br>
+
+    <label>CGPA:</label>
+    <input
+        type="number"
+        step="0.01"
+        min="0"
+        max="10"
+        id="cgpa"
+        required>
+
+    <br><br>
+
+    <input
+        class="btn"
+        type="submit"
+        value="Update">
+
+</form>
+
+<script>
+
+let studentId =
+sessionStorage.getItem(
+    "editStudentId"
+);
+
+if(!studentId){
+
+    window.location.replace(
+        "viewstudent.html"
+    );
+}
+
+async function loadStudent(){
+
+    try{
+
+        let response =
+        await fetch(
+            `http://localhost:3000/students/${studentId}`
+        );
+
+        if(!response.ok){
+
+            throw new Error(
+            "Student Not Found"
+            );
+        }
+
+        let student =
+        await response.json();
+
+        document.getElementById("name").value =
+        student.name;
+
+        document.getElementById("age").value =
+        student.age;
+
+        document.getElementById("rollno").value =
+        student.rollno;
+
+        document.getElementById("cgpa").value =
+        student.cgpa;
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        window.location.replace(
+            "viewstudent.html"
+        );
+    }
+
+}
+
+async function updateStudent(event){
+
+    event.preventDefault();
+
+    let updatedStudent = {
+
+        name:
+        document.getElementById("name")
+        .value.trim(),
+
+        age:
+        Number(
+            document.getElementById("age")
+            .value
+        ),
+
+        rollno:
+        Number(
+            document.getElementById("rollno")
+            .value
+        ),
+
+        cgpa:
+        Number(
+            document.getElementById("cgpa")
+            .value
+        )
+
+    };
+
+    if(updatedStudent.name === ""){
+
+        alert(
+        "Name is required"
+        );
+
+        return;
+    }
+
+    if(
+        updatedStudent.age < 16 ||
+        updatedStudent.age > 35
+    ){
+
+        alert(
+        "Age must be between 16 and 35"
+        );
+
+        return;
+    }
+
+    if(
+        updatedStudent.cgpa < 0 ||
+        updatedStudent.cgpa > 10
+    ){
+
+        alert(
+        "CGPA must be between 0 and 10"
+        );
+
+        return;
+    }
+
+    try{
+
+        let allStudentsResponse =
+        await fetch(
+            "http://localhost:3000/students"
+        );
+
+        let allStudents =
+        await allStudentsResponse.json();
+
+        let duplicateRollNo =
+        allStudents.find(student =>
+
+            student.rollno ===
+            updatedStudent.rollno &&
+
+            student.id !== studentId
+
+        );
+
+        if(duplicateRollNo){
+
+            alert(
+            "Roll Number already exists"
+            );
+
+            return;
+        }
+
+        let response =
+        await fetch(
+            `http://localhost:3000/students/${studentId}`,
+            {
+                method: "PATCH",
+
+                headers: {
+                    "Content-Type":
+                    "application/json"
+                },
+
+                body:
+                JSON.stringify(
+                    updatedStudent
+                )
+            }
+        );
+
+        if(!response.ok){
+
+            throw new Error(
+            "Update Failed"
+            );
+        }
+
+        alert(
+        "Student Updated Successfully"
+        );
+
+        window.location.replace(
+            "viewstudent.html"
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Update Error:",
+            error
+        );
+
+        alert(
+        "Unable to update student."
+        );
+    }
+
+}
+
+loadStudent();
+
+</script>
+
+</body>
+</html>
