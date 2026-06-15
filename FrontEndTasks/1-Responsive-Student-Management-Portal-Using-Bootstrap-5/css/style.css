@@ -1,0 +1,86 @@
+body{
+    background-color:#f8f9fa;
+    font-family:Arial, sans-serif;
+}
+
+.navbar-brand{
+    font-weight:bold;
+}
+
+.hero-section{
+    padding:80px 0;
+}
+
+.card{
+    border:none;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card-img-top{
+    height:220px;
+    object-fit:cover;
+}
+
+.carousel-item img{
+    height:450px;
+    object-fit:cover;
+}
+
+.table{
+    background-color:white;
+}
+
+footer{
+    margin-top:30px;
+}
+
+.profile-img{
+    width:150px;
+    height:150px;
+    object-fit:cover;
+}
+
+.id-card{
+    border:2px solid #0d6efd;
+}
+
+.form-control:focus,
+.form-select:focus{
+    box-shadow:none;
+    border-color:#0d6efd;
+}
+
+.alert{
+    border-radius:10px;
+}
+
+.accordion-button:not(.collapsed){
+    background-color:#0d6efd;
+    color:white;
+}
+
+.statistics-card{
+    padding:20px;
+    text-align:center;
+    color:white;
+}
+
+.bg-dashboard{
+    background-color:#f1f5f9;
+}
+
+.social-links a{
+    text-decoration:none;
+    margin:0 10px;
+    color:white;
+}
+
+.social-links a:hover{
+    color:#0d6efd;
+}

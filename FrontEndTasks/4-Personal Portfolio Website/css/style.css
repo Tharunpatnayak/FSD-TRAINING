@@ -1,0 +1,19 @@
+body{
+    background:#f8f9fa;
+}
+
+.card{
+    height:100%;
+}
+
+.progress{
+    height:25px;
+}
+
+img{
+    object-fit:cover;
+}
+
+footer{
+    margin-top:30px;
+}
