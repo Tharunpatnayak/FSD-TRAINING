@@ -1,0 +1,23 @@
+.navBar {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+@media screen and (max-width: 768px) {
+    .navBar {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .navBar a {
+        margin: 10px 0;
+    }
+    }
+    @media screen and (min-width: 769px) {
+    .navBar {
+        flex-direction: row;
+        justify-content: space-around;
+        
+    }
+
+}
