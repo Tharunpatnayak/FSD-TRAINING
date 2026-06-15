@@ -42,7 +42,7 @@ Ans.SELECT e.city, AVG(f.rating) AS avg_rating FROM Events e
 Ans.SELECT e.event_id,e.title,COUNT(r.registration_id) AS total_registrations
     FROM Events e JOIN Registrations r ON r.event_id = e.event_id GROUP BY e.event_id, e.title
     ORDER BY total_registrations DESC LIMIT 3;
-15.Event Session Time Conflict
+15.Event Session Time Conflict.
 Ans.SELECT s1.event_id,s1.session_id AS session1,s2.session_id AS session2
     FROM Sessions s1 JOIN Sessions s2 ON s1.event_id = s2.event_id AND s1.session_id < s2.session_id
     AND s1.start_time < s2.end_time AND s1.end_time > s2.start_time;
