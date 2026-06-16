@@ -1,0 +1,96 @@
+{
+  "courses": [
+    {
+      "id": "1",
+      "name": "Web Development",
+      "duration": "6 Months",
+      "fee": 15000,
+      "image": "images/web-development.jpg",
+      "description": "Learn HTML, CSS, JavaScript, Bootstrap and modern web technologies."
+    },
+    {
+      "id": "2",
+      "name": "Python Programming",
+      "duration": "4 Months",
+      "fee": 12000,
+      "image": "images/python.jpg",
+      "description": "Master Python fundamentals, OOP concepts and real-world projects."
+    },
+    {
+      "id": "3",
+      "name": "Data Science",
+      "duration": "8 Months",
+      "fee": 25000,
+      "image": "images/data-science.jpg",
+      "description": "Learn data analysis, visualization and predictive modeling."
+    },
+    {
+      "id": "4",
+      "name": "AI & Machine Learning",
+      "duration": "8 Months",
+      "fee": 30000,
+      "image": "images/ai-ml.jpg",
+      "description": "Build intelligent applications using machine learning algorithms."
+    },
+    {
+      "id": "5",
+      "name": "Java Programming",
+      "duration": "5 Months",
+      "fee": 14000,
+      "image": "images/java.jpg",
+      "description": "Learn Core Java, JDBC, Servlets and enterprise application development."
+    },
+    {
+      "id": "6",
+      "name": "Cloud Computing",
+      "duration": "6 Months",
+      "fee": 20000,
+      "image": "images/cloud.jpg",
+      "description": "Learn AWS, Azure and cloud infrastructure deployment techniques."
+    }
+  ],
+  "registrations": [
+    {
+      "studentName": "srinivasulu",
+      "email": "s@gmail.com",
+      "mobile": "9876543210",
+      "gender": "Male",
+      "course": "Web Development",
+      "qualification": "btech",
+      "address": "wefg234",
+      "registrationDate": "6/16/2026",
+      "id": "firKCu-2EjY"
+    }
+  ],
+  "contactMessages": [
+    {
+      "name": "Banoth Kishor",
+      "email": "s@gmail.com",
+      "subject": "ewfd",
+      "message": "21w",
+      "date": "6/16/2026, 2:06:35 PM",
+      "id": "LP_QCs9AoEs"
+    }
+  ],
+  "faculty": [
+    {
+      "id": 1,
+      "name": "Dr. Rajesh Kumar",
+      "designation": "Head of Web Development Department",
+      "image": "images/faculty.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Ms. Priya Sharma",
+      "designation": "Senior Python & Data Science Trainer",
+      "image": "images/faculty2.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Mr. Arjun Reddy",
+      "designation": "AI & Machine Learning Specialist",
+      "image": "images/faculty3.jpg"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

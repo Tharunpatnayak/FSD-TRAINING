@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Online Course Registration Portal
+    </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold"
+           href="index.html">
+
+            TechLearn Institute
+
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse"
+             id="navbarNav">
+
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+
+                    <a class="nav-link active"
+                       href="index.html">
+
+                        Home
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="courses.html">
+
+                        Courses
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="about.html">
+
+                        About
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="contact.html">
+
+                        Contact
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+            <a href="registration.html"
+               class="btn btn-light">
+
+                Register
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<section class="bg-primary text-white text-center py-5">
+
+    <div class="container">
+
+        <h1 class="display-4 fw-bold">
+
+            TechLearn Institute
+
+        </h1>
+
+        <p class="lead">
+
+            Learn Today, Lead Tomorrow
+
+        </p>
+
+        <p>
+
+            Join our industry-focused courses and build your career with
+            practical skills and expert guidance.
+
+        </p>
+
+        <a href="courses.html"
+           class="btn btn-warning btn-lg">
+
+            Explore Courses
+
+        </a>
+
+    </div>
+
+</section>
+
+<section class="container py-5">
+
+    <div class="row text-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <h2 id="courseCount">
+
+                        0
+
+                    </h2>
+
+                    <h5>
+
+                        Available Courses
+
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <h2 id="registrationCount">
+
+                        0
+
+                    </h2>
+
+                    <h5>
+
+                        Registered Students
+
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div id="courseCarousel"
+     class="carousel slide mt-4">
+
+    <div class="carousel-inner">
+
+        <div class="carousel-item active">
+
+            <img src="https://picsum.photos/id/1011/1200/450"
+                 class="d-block w-100"
+                 height="450">
+
+        </div>
+
+        <div class="carousel-item">
+
+            <img src="https://picsum.photos/id/1012/1200/451"
+                 class="d-block w-100"
+                 height="450">
+
+        </div>
+
+        <div class="carousel-item">
+
+            <img src="https://picsum.photos/id/1013/1200/452"
+                 class="d-block w-100"
+                 height="450">
+
+        </div>
+
+    </div>
+
+</div>
+
+<section class="container py-5">
+
+    <h2 class="text-center mb-5">
+
+        Featured Courses
+
+    </h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card h-100">
+                <img src="images/web-development.jpg"
+                     class="card-img-top">
+
+                <div class="card-body">
+
+                    <h5>
+                        Web Development
+                    </h5>
+
+                    <p>
+                        Duration: 6 Months
+                    </p>
+
+                    <p>
+                        Fee: ₹15,000
+                    </p>
+
+                    <a href="courses.html"
+                       class="btn btn-primary">
+
+                        View Details
+
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100">
+                <img src="images/python.jpg"
+                     class="card-img-top">
+
+                <div class="card-body">
+
+                    <h5>
+                        Python Programming
+                    </h5>
+
+                    <p>
+                        Duration: 4 Months
+                    </p>
+
+                    <p>
+                        Fee: ₹12,000
+                    </p>
+
+                    <a href="courses.html"
+                       class="btn btn-primary">
+
+                        View Details
+
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100">
+                <img src="images/data-science.jpg"
+                     class="card-img-top">
+
+                <div class="card-body">
+
+                    <h5>
+                        Data Science
+                    </h5>
+
+                    <p>
+                        Duration: 8 Months
+                    </p>
+
+                    <p>
+                        Fee: ₹25,000
+                    </p>
+
+                    <a href="courses.html"
+                       class="btn btn-primary">
+
+                        View Details
+
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="bg-light py-5">
+
+    <div class="container">
+
+        <h2 class="text-center mb-5">
+
+            Student Testimonials
+
+        </h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <p>
+                            Excellent training and practical sessions helped me secure a software job.
+                        </p>
+
+                        <h6>
+                            - Rahul Kumar
+                        </h6>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <p>
+                            The instructors are highly experienced and supportive.
+                        </p>
+
+                        <h6>
+                            - Sneha Reddy
+                        </h6>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <p>
+                            Best institute for learning Python and Data Science.
+                        </p>
+
+                        <h6>
+                            - Arjun Sharma
+                        </h6>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer class="bg-dark text-white text-center py-4">
+
+    <h5>
+
+        TechLearn Institute
+
+    </h5>
+
+    <p>
+
+        Hyderabad, Telangana
+
+    </p>
+
+    <p>
+
+        Phone: +91 9876543210
+
+    </p>
+
+    <p>
+
+        Email: info@techlearn.com
+
+    </p>
+
+    <p>
+
+        Facebook | Instagram | LinkedIn | Twitter
+
+    </p>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+async function loadDashboardData(){
+
+    try{
+
+        let courseResponse =
+        await fetch(
+            "http://localhost:3000/courses"
+        );
+
+        let courses =
+        await courseResponse.json();
+
+        document.getElementById(
+            "courseCount"
+        ).innerText =
+        courses.length;
+
+        let registrationResponse =
+        await fetch(
+            "http://localhost:3000/registrations"
+        );
+
+        let registrations =
+        await registrationResponse.json();
+
+        document.getElementById(
+            "registrationCount"
+        ).innerText =
+        registrations.length;
+
+    }
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+loadDashboardData();
+
+const carouselElement =
+document.querySelector(
+    "#courseCarousel"
+);
+
+if(carouselElement){
+
+    new bootstrap.Carousel(
+        carouselElement,
+        {
+            interval: 3000,
+            ride: "carousel"
+        }
+    );
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - TechLearn Institute</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="index.html">
+            TechLearn Institute
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="courses.html">
+                        Courses
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">
+                        About
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+
+            <a href="registration.html" class="btn btn-light">
+                Register
+            </a>
+
+        </div>
+
+    </div>
+</nav>
+
+<section class="bg-light py-5">
+
+    <div class="container text-center">
+
+        <h1 class="display-5 fw-bold">
+            Our Courses
+        </h1>
+
+        <p class="lead">
+            Explore our industry-oriented training programs.
+        </p>
+
+    </div>
+
+</section>
+
+<div class="container mb-4">
+
+    <input
+        type="text"
+        id="searchCourse"
+        class="form-control"
+        placeholder="Search Course">
+
+</div>
+
+<div class="container py-5">
+
+    <div class="row g-4" id="courseContainer">
+
+    </div>
+
+</div>
+
+<footer class="bg-dark text-white text-center py-4">
+
+    <h5>TechLearn Institute</h5>
+
+    <p>
+        Hyderabad, Telangana
+    </p>
+
+    <p>
+        Phone: +91 9876543210
+    </p>
+
+    <p>
+        Email: info@techlearn.com
+    </p>
+
+</footer>
+
+<script>
+
+let allCourses = [];
+
+async function loadCourses(){
+
+    try{
+
+        let response =
+await fetch(
+    "/api/courses"
+);
+        allCourses =
+        await response.json();
+
+        displayCourses(
+            allCourses
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+        "Unable to load courses."
+        );
+
+    }
+
+}
+
+function displayCourses(courses){
+
+    let container =
+    document.getElementById(
+        "courseContainer"
+    );
+
+    container.innerHTML = "";
+
+    if(courses.length === 0){
+
+        container.innerHTML = `
+
+        <div class="col-12">
+
+            <div class="alert alert-danger">
+
+                No Courses Found
+
+            </div>
+
+        </div>
+
+        `;
+
+        return;
+    }
+
+    courses.forEach(course => {
+
+        container.innerHTML += `
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="card h-100">
+
+                <img src="${course.image}"
+                     class="card-img-top"
+                     alt="${course.name}">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+
+                        ${course.name}
+
+                    </h5>
+
+                    <p>
+
+                        ${course.description}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Duration:</strong>
+
+                        ${course.duration}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Fee:</strong>
+
+                        ₹${course.fee}
+
+                    </p>
+
+                    <a href="registration.html"
+                       class="btn btn-primary">
+
+                        Enroll Now
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+document.getElementById(
+    "searchCourse"
+).addEventListener(
+    "keyup",
+    function(){
+
+        let value =
+        this.value.toLowerCase();
+
+        let filteredCourses =
+        allCourses.filter(course =>
+
+            course.name
+            .toLowerCase()
+            .includes(value)
+
+        );
+
+        displayCourses(
+            filteredCourses
+        );
+
+    }
+);
+
+loadCourses();
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
