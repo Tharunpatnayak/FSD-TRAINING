@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+
+        let loggedInUser =
+        JSON.parse(
+            sessionStorage.getItem(
+                "loggedInUser"
+            )
+        );
+
+        if(!loggedInUser){
+
+            alert(
+            "Please Login First"
+            );
+
+            window.location.href =
+            "login.html";
+        }
+
+    </script>
+
+</head>
+<body>
+
+<nav>
+
+    <a href="dashboard.html">
+        Dashboard
+    </a>
+
+    <a href="addstudent.html">
+        Add Student
+    </a>
+
+    <a href="viewstudent.html">
+        View Student
+    </a>
+
+    <a href="editstudent.html">
+        Edit Student
+    </a>
+
+    <a href="logout.html">
+        Logout
+    </a>
+
+</nav>
+
+<h1>Edit Student Details</h1>
+
+<form id="editForm">
+
+    <label>Name:</label>
+
+    <input
+        type="text"
+        id="name"
+        required>
+
+    <br><br>
+
+    <label>Age:</label>
+
+    <input
+        type="number"
+        id="age"
+        required>
+
+    <br><br>
+
+    <label>Roll Number:</label>
+
+    <input
+        type="text"
+        id="rollno"
+        required>
+
+    <br><br>
+
+    <label>CGPA:</label>
+
+    <input
+        type="number"
+        step="0.01"
+        id="cgpa"
+        required>
+
+    <br><br>
+
+    <input
+        class="btn"
+        type="submit"
+        value="Update">
+
+</form>
+
+<script>
+
+let studentId =
+sessionStorage.getItem(
+    "editStudentId"
+);
+
+if(!studentId){
+
+    alert(
+    "No Student Selected"
+    );
+
+    window.location.href =
+    "viewstudent.html";
+}
+
+async function loadStudent(){
+
+    try{
+
+        let response =
+        await fetch(
+            `http://localhost:8080/api/students/${studentId}`
+        );
+
+        if(!response.ok){
+
+            throw new Error(
+            "Student Not Found"
+            );
+
+        }
+
+        let student =
+        await response.json();
+
+        document.getElementById(
+            "name"
+        ).value =
+        student.name;
+
+        document.getElementById(
+            "age"
+        ).value =
+        student.age;
+
+        document.getElementById(
+            "rollno"
+        ).value =
+        student.rollno;
+
+        document.getElementById(
+            "cgpa"
+        ).value =
+        student.cgpa;
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+        "Unable To Load Student"
+        );
+
+    }
+
+}
+
+document.getElementById(
+    "editForm"
+).addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        let student = {
+
+            name:
+            document.getElementById(
+                "name"
+            ).value,
+
+            age:
+            document.getElementById(
+                "age"
+            ).value,
+
+            rollno:
+            document.getElementById(
+                "rollno"
+            ).value,
+
+            cgpa:
+            document.getElementById(
+                "cgpa"
+            ).value
+
+        };
+
+        try{
+
+            let response =
+            await fetch(
+                `http://localhost:8080/api/students/${studentId}`,
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type":
+                        "application/json"
+                    },
+
+                    body:
+                    JSON.stringify(
+                        student
+                    )
+                }
+            );
+
+            if(!response.ok){
+
+                throw new Error(
+                "Update Failed"
+                );
+
+            }
+
+            alert(
+            "Student Updated Successfully"
+            );
+
+            sessionStorage.removeItem(
+                "editStudentId"
+            );
+
+            window.location.href =
+            "viewstudent.html";
+
+        }
+        catch(error){
+
+            console.error(error);
+
+            alert(
+            "Unable To Update Student"
+            );
+
+        }
+
+    }
+);
+
+loadStudent();
+
+</script>
+
+</body>
+</html>

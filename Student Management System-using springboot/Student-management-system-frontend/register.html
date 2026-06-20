@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+</nav>
+
+<h1>Register</h1>
+
+<form id="registerForm">
+
+    <label>Username:</label>
+    <input type="text" id="username" required>
+
+    <br><br>
+
+    <label>Email:</label>
+    <input type="email" id="email" required>
+
+    <br><br>
+
+    <label>Password:</label>
+    <input type="password" id="password" required>
+
+    <br><br>
+
+    <label>Confirm Password:</label>
+    <input type="password" id="confirmPassword" required>
+
+    <br><br>
+
+    <input class="btn" type="submit" value="Register">
+
+</form>
+
+<h2>Already Registered?</h2>
+
+<a href="login.html">
+    Go to Login
+</a>
+
+<script>
+
+document.getElementById(
+    "registerForm"
+).addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        let username =
+        document.getElementById(
+            "username"
+        ).value.trim();
+
+        let email =
+        document.getElementById(
+            "email"
+        ).value.trim();
+
+        let password =
+        document.getElementById(
+            "password"
+        ).value;
+
+        let confirmPassword =
+        document.getElementById(
+            "confirmPassword"
+        ).value;
+
+        let usernameRegex =
+        /^[A-Za-z0-9]{4,15}$/;
+
+        let emailRegex =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        let passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+        if(!usernameRegex.test(username)){
+
+            alert(
+            "Username must contain 4-15 letters and numbers only."
+            );
+
+            return;
+        }
+
+        if(!emailRegex.test(email)){
+
+            alert(
+            "Please enter a valid email."
+            );
+
+            return;
+        }
+
+        if(!passwordRegex.test(password)){
+
+            alert(
+            "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character."
+            );
+
+            return;
+        }
+
+        if(password !== confirmPassword){
+
+            alert(
+            "Passwords do not match."
+            );
+
+            return;
+        }
+
+        let user = {
+
+            username: username,
+            email: email,
+            password: password
+
+        };
+
+        try{
+
+            let response =
+            await fetch(
+                "http://localhost:8080/api/users/register",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                        "application/json"
+                    },
+
+                    body:
+                    JSON.stringify(user)
+                }
+            );
+
+            if(!response.ok){
+
+                throw new Error(
+                "Registration Failed"
+                );
+
+            }
+
+            alert(
+            "Registration Successful"
+            );
+
+            window.location.href =
+            "login.html";
+
+        }
+        catch(error){
+
+            console.error(error);
+
+            alert(
+            "Unable to connect to Spring Boot Server"
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

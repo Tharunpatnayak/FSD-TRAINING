@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="register.html">Register</a>
+</nav>
+
+<form id="loginForm">
+
+    <h1>Login</h1>
+
+    <label>Username:</label>
+    <input type="text" id="username" required>
+
+    <br><br>
+
+    <label>Password:</label>
+    <input type="password" id="password" required>
+
+    <br><br>
+
+    <input
+        class="btn"
+        type="submit"
+        value="Login">
+
+</form>
+
+<script>
+
+document.getElementById(
+    "loginForm"
+).addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        let username =
+        document.getElementById(
+            "username"
+        ).value.trim();
+
+        let password =
+        document.getElementById(
+            "password"
+        ).value;
+
+        let usernameRegex =
+        /^[A-Za-z0-9]{4,15}$/;
+
+        let passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+        if(!usernameRegex.test(username)){
+
+            alert(
+            "Invalid Username Format"
+            );
+
+            return;
+        }
+
+        if(!passwordRegex.test(password)){
+
+            alert(
+            "Invalid Password Format"
+            );
+
+            return;
+        }
+
+        let loginData = {
+
+            username: username,
+            password: password
+
+        };
+
+        try{
+
+            let response =
+            await fetch(
+                "http://localhost:8080/api/users/login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                        "application/json"
+                    },
+
+                    body:
+                    JSON.stringify(loginData)
+                }
+            );
+
+            if(!response.ok){
+
+                alert(
+                "Invalid Username or Password"
+                );
+
+                return;
+            }
+
+            let user =
+            await response.json();
+
+            sessionStorage.setItem(
+                "loggedInUser",
+                JSON.stringify(user)
+            );
+
+            alert(
+            "Login Successful!"
+            );
+
+            window.location.href =
+            "dashboard.html";
+
+        }
+        catch(error){
+
+            console.error(error);
+
+            alert(
+            "Unable to connect to Spring Boot Server"
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
