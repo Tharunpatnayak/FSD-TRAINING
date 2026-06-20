@@ -1,4 +1,4 @@
-package com.example.order;
+package com.example.food;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

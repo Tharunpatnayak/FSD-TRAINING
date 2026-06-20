@@ -1,4 +1,4 @@
-package com.example.productdemo;
+package com.example.product;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
